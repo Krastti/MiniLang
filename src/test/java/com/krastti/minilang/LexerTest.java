@@ -74,8 +74,11 @@ class LexerTest {
 
     @Test
     void keepsEachComparisonOperatorTogether() {
-        assertTokenTypeNames("< <= > >= == != =", "LESS", "LESS_EQUAL", "GREATER", "GREATER_EQUAL",
-                "EQUAL_EQUAL", "BANG_EQUAL", "EQUALS", "EOF");
+        assertTokens("< <= > >= == != =",
+                new Token(TokenType.LESS, "<"), new Token(TokenType.LESS_EQUAL, "<="),
+                new Token(TokenType.GREATER, ">"), new Token(TokenType.GREATER_EQUAL, ">="),
+                new Token(TokenType.EQUAL_EQUAL, "=="), new Token(TokenType.BANG_EQUAL, "!="),
+                new Token(TokenType.EQUALS, "="));
     }
 
     @Test

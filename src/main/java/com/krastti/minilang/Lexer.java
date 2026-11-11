@@ -3,6 +3,7 @@ package com.krastti.minilang;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 public class Lexer {
 
@@ -15,7 +16,7 @@ public class Lexer {
     );
 
     public List<Token> tokenize(String args) {
-        List<Token> tokens = new ArrayList<>();
+        List<Token> tokens = new TokenList();
 
         for (int pos = 0; pos < args.length(); ++pos) {
             var symbol = args.charAt(pos);
@@ -41,13 +42,13 @@ public class Lexer {
             }
 
             if (symbol == '<' && pos + 1 < args.length() && args.charAt(pos + 1) == '=') {
-                tokens.add(new Token(TokenType.LESS_EQUAL, "!="));
+                tokens.add(new Token(TokenType.LESS_EQUAL, "<="));
                 pos++;
                 continue;
             }
 
             if (symbol == '>' && pos + 1 < args.length() && args.charAt(pos + 1) == '=') {
-                tokens.add(new Token(TokenType.GREATER_EQUAL, "!="));
+                tokens.add(new Token(TokenType.GREATER_EQUAL, ">="));
                 pos++;
                 continue;
             }
@@ -116,6 +117,24 @@ public class Lexer {
             end++;
         }
         return end;
+    }
+
+    private static final class TokenList extends ArrayList<Token> {
+        @Override
+        public String toString() {
+            String newline = System.lineSeparator();
+            var lines = new StringJoiner(newline, "", newline).setEmptyValue("");
+            for (Token token : this) {
+                String lexeme = token.lexeme()
+                        .replace("\\", "\\\\")
+                        .replace("\"", "\\\"")
+                        .replace("\r", "\\r")
+                        .replace("\n", "\\n")
+                        .replace("\t", "\\t");
+                lines.add(token.type() + " \"" + lexeme + "\"");
+            }
+            return lines.toString();
+        }
     }
 }
 
