@@ -7,6 +7,21 @@
 
 MiniLang — учебный язык программирования с интерпретатором на Java.
 
+**Результат локального прогона:** прошли все 13 сценариев [InterpretatorTest](src/test/java/com/krastti/minilang/InterpretatorTest.java) и все 62 теста проекта. Тесты интерпретатора проверяют выполнение исходного кода через лексер, парсер и интерпретатор.
+
+```text
+remember total = 2 + 3 * 4
+print total
+print total >= 10
+```
+
+Программа выводит:
+
+```text
+14.0
+true
+```
+
 ## Documentation
 
 [Документация MiniLang](Documentation.md) описывает синтаксис, запуск и примеры программ.
@@ -30,6 +45,12 @@ java -cp target/classes com.krastti.minilang.Main examples/main.mini
 
 ```bash
 mvn test
+```
+
+Чтобы запустить только тесты интерпретатора:
+
+```bash
+mvn -Dtest=InterpretatorTest test
 ```
 
 ## Authors
